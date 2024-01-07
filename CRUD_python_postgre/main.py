@@ -10,8 +10,15 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 
 def create_user(connect,cursor):
     """A) Crear usuario"""
-    username=input("Ingrese su nombre de usuario: ")
-    email=input("Ingrese su email: ")
+    
+    confirm=False
+    
+    while confirm==False:
+        username=input("Ingrese su nombre de usuario: ")
+        email=input("Ingrese su email: ")
+        if ('@' in email)==True:
+            confirm=True  
+            print("Porfavor, un email lleva siempre un @")
 
     query="INSERT INTO users(username, email) VALUES(%s, %s)"
     values=(username,email)
@@ -19,19 +26,63 @@ def create_user(connect,cursor):
     cursor.execute(query,values)
     connect.commit()
 
+    print(">>>USUARIO CREADO EXITOSAMENTE")
+    print("---------------------------")
+
 def list_users(connect,cursor):
     """B) Listar usuarios"""
-    print("Usuario creado")
+    query="SELECT id, username, email FROM users"
+    cursor.execute(query)
+
+    print(">>>Lista de usuarios:")
+
+    for id, username, email in cursor.fetchall():
+        print(id,'-',username,'-',email)
+
+    print("---------------------------")
+    
 
 
 def update_user(connect,cursor):
     """C) Actualizar usuario"""
-    print("Usuario creado")
+    id=input("Ingresa el id del usuario a actualizar: ")
+
+    query="SELECT id FROM users WHERE id= %s"
+    cursor.execute(query,(id,))
+
+    user=cursor.fetchone() #None
+    if user:
+
+        username=input("Ingresa un nuevo username: ")
+        email=input("Ingresa un nuevo email: ")
+
+        query="UPDATE users SET username = %s, email= %s WHERE id= %s"
+        values=(username, email, id)
+        cursor.execute(query, values)
+        connect.commit()
+        print(">>>USUARIO ACTUALIZADO EXITOSAMENTE")
+    else:
+        print("No existe un suario con ese id, intente de nuevo!")    
+
 
 
 def delete_user(connect,cursor):
     """D) Eliminar usuario"""
-    print("Usuario creado")
+    id=input("Ingrese el id del usuario a actualizar")
+
+    query="SELECT id FROM users WHERE id= %s"
+    cursor.execute(query,(id,))
+
+    user=cursor.fetchone()
+    if user:
+        query="DELETE FROM users WHERE id=%s"
+        cursor.execute(query,(id,))
+        connect.commit()
+        print(">>>USUARIO ELIMINADO EXITOSAMENTE")
+    else:
+        print("No existe un suario con ese id, intente de nuevo!")      
+    
+
 
 def default(*args):
     print("Opcion no valida")
@@ -50,8 +101,8 @@ if __name__=="__main__":
         
         with connect.cursor() as cursor:
             
-            cursor.execute(DROP_USERS_TABLE)
-            cursor.execute(USERS_TABLE)
+            #cursor.execute(DROP_USERS_TABLE)
+            #cursor.execute(USERS_TABLE)
 
             connect.commit()
 
