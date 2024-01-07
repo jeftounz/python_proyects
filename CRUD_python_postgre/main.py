@@ -8,33 +8,40 @@ email VARCHAR(50) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 """
 
-def craete_user():
+def create_user(connect,cursor):
     """A) Crear usuario"""
-    print("Usuario creado")
+    username=input("Ingrese su nombre de usuario: ")
+    email=input("Ingrese su email: ")
 
-def list_users():
+    query="INSERT INTO users(username, email) VALUES(%s, %s)"
+    values=(username,email)
+
+    cursor.execute(query,values)
+    connect.commit()
+
+def list_users(connect,cursor):
     """B) Listar usuarios"""
     print("Usuario creado")
 
 
-def upadte_user():
+def update_user(connect,cursor):
     """C) Actualizar usuario"""
     print("Usuario creado")
 
 
-def delete_user():
+def delete_user(connect,cursor):
     """D) Eliminar usuario"""
     print("Usuario creado")
 
-def default():
+def default(*args):
     print("Opcion no valida")
 
 if __name__=="__main__":
     
     options={
-        'a':craete_user,
+        'a':create_user,
         'b':list_users,
-        'c':upadte_user,
+        'c':update_user,
         'd':delete_user
     }
 
@@ -55,13 +62,13 @@ if __name__=="__main__":
                 
                 print("quit para salir")
 
-                option:input("Seleccion una opcion valida:").lower()
+                option=input("Seleccion una opcion valida:").lower()
 
                 if option=="quit" or option=="q":
                     break
 
                 function=options.get(option,default)
-                function()
+                function(connect,cursor)
 
         connect.close()
 
