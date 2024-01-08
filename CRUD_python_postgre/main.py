@@ -1,5 +1,5 @@
-import psycopg2
-
+import psycopg2 #AQUI TENDREMOS NUESTRA CONECCION DE PYTHON A POSTGREE
+import os #Importaremos de aqui la funcion system (cls) para windows
 DROP_USERS_TABLE="DROP TABLE IF EXISTS users"
 
 USERS_TABLE="""CREATE TABLE users(id SERIAL,
@@ -7,7 +7,22 @@ username VARCHAR(50) NOT NULL,
 email VARCHAR(50) NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
 """
+#DECORADOR PARA PODER LIMPIAR LA CONSOLA POR CADA OPERACION
+def system_clear(function):
+    def wrapper(connect,cursor):
+        os.system("cls")
 
+        function(connect,cursor)
+
+        input("Presione alguna tecla para continuar...")
+
+        os.system("cls")
+
+    wrapper.__doc__=function.__doc__
+    return wrapper
+
+
+@system_clear
 def create_user(connect,cursor):
     """A) Crear usuario"""
     
@@ -18,7 +33,8 @@ def create_user(connect,cursor):
         email=input("Ingrese su email: ")
         if ('@' in email)==True:
             confirm=True  
-            print("Porfavor, un email lleva siempre un @")
+        else:
+            print("Porfavor, un email lleva siempre un @")    
 
     query="INSERT INTO users(username, email) VALUES(%s, %s)"
     values=(username,email)
@@ -29,6 +45,7 @@ def create_user(connect,cursor):
     print(">>>USUARIO CREADO EXITOSAMENTE")
     print("---------------------------")
 
+@system_clear
 def list_users(connect,cursor):
     """B) Listar usuarios"""
     query="SELECT id, username, email FROM users"
@@ -59,7 +76,7 @@ def user_exist(function): #La funcion pide el id y autentica si el usuario exist
     return wrapper 
 
 
-
+@system_clear
 @user_exist
 def update_user(id,connect,cursor):
     """C) Actualizar usuario"""
@@ -74,7 +91,7 @@ def update_user(id,connect,cursor):
     connect.commit()
     print(">>>USUARIO ACTUALIZADO EXITOSAMENTE")
     
-
+@system_clear
 @user_exist
 def delete_user(id,connect,cursor):
     """D) Eliminar usuario"""
