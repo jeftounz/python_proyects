@@ -17,6 +17,9 @@ class User(peewee.Model):
     class Meta:
         database=database
         db_table='users'
+    
+    def __str__(self):
+        return self.username
 
 
 if __name__=='__main__':
@@ -25,3 +28,33 @@ if __name__=='__main__':
         User.drop_table()
     
     User.create_table()
+
+    #METODOS PARA INSERTAR REGISTROS
+    #METODO 1:
+    user1=User(username='user1',email='user1@ejemplo.com',active=True)
+    user1.save()
+
+    #METODO 2:
+    user2= User()
+    user2.username='user2'
+    user2.email='user2@gmail.com'
+    user2.save()
+
+    #METODO 3:
+
+    values={
+        'username': 'user3',
+        'email': 'user3@gmail.com'
+    }
+
+    user3=User(**values)
+    user3.save()
+
+    #METODO 4:
+    user4=User.create(username='user4',email='user4@gmail.com')
+    print(user4.id)
+
+    #METODO 5
+    query=User.insert(username="user5",email="user5@gmail.com")
+    print(type(query)) #Se devuelve un query con el metodo insert para su ejecucion
+    query.execute()
