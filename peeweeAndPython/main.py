@@ -60,20 +60,29 @@ if __name__=='__main__':
     query.execute()"""
 
     #METODO PARA MULTIPLES REGISTROS
-    users=[{"username":"user1","email":"user1@gmail.com"},
+    users=[{"username":"user1","email":"user1@gmail.com",'active':True},
            {"username":"user2","email":"user2@gmail.com"},
-           {"username":"user3","email":"user3@gmail.com"},
-           {"username":"user4","email":"user4@gmail.com"},
+           {"username":"user3","email":"user3@gmail.com",'active':True},
+           {"username":"user4","email":"user4@gmail.com",},
            {"username":"user5","email":"user5@gmail.com"},
-           {"username":"user6","email":"user6@gmail.com"},
-           {"username":"user7","email":"user7@gmail.com"},]
+           {"username":"user6","email":"user6@gmail.com",'active':True},
+           {"username":"user7","email":"user7@gmail.com",'active':True},]
     
     query=User.insert_many(users)
     query.execute()
 
     #OBTENER REGISTROS OH CONSULTAS
-    #SELECT username, email from users; es lo que significa
-    users=User.select(User.username,User.email)
+    #SELECT username, email from users; es lo que significa y el .where es para discriminar
+    users=User.select(User.username,
+                      User.email,
+                      User.active
+        ).where(
+        (User.active==True) & 
+        (
+            (User.id==1) | (User.id==7)
+        )
+        
+        )
 
     #Imprimimos los registros
     for user in users:
