@@ -30,7 +30,7 @@ if __name__=='__main__':
     User.create_table()
 
     #METODOS PARA INSERTAR REGISTROS
-    #METODO 1:
+    """#METODO 1:
     user1=User(username='user1',email='user1@ejemplo.com',active=True)
     user1.save()
 
@@ -57,4 +57,24 @@ if __name__=='__main__':
     #METODO 5
     query=User.insert(username="user5",email="user5@gmail.com")
     print(type(query)) #Se devuelve un query con el metodo insert para su ejecucion
+    query.execute()"""
+
+    #METODO PARA MULTIPLES REGISTROS
+    users=[{"username":"user1","email":"user1@gmail.com"},
+           {"username":"user2","email":"user2@gmail.com"},
+           {"username":"user3","email":"user3@gmail.com"},
+           {"username":"user4","email":"user4@gmail.com"},
+           {"username":"user5","email":"user5@gmail.com"},
+           {"username":"user6","email":"user6@gmail.com"},
+           {"username":"user7","email":"user7@gmail.com"},]
+    
+    query=User.insert_many(users)
     query.execute()
+
+    #OBTENER REGISTROS OH CONSULTAS
+    #SELECT username, email from users; es lo que significa
+    users=User.select(User.username,User.email)
+
+    #Imprimimos los registros
+    for user in users:
+        print(user)
