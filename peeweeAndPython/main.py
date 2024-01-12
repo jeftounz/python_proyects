@@ -73,7 +73,7 @@ if __name__=='__main__':
 
     #OBTENER REGISTROS OH CONSULTAS
     #SELECT username, email from users; es lo que significa y el .where es para discriminar
-    users=User.select(User.username,
+    '''users=User.select(User.username,
                       User.email,
                       User.active
         ).where(
@@ -82,8 +82,15 @@ if __name__=='__main__':
             (User.id==1) | (User.id==7)
         )
         
-        )
-
+        )'''
+    #SI QUEREMOS TENER LOS REGISTROS ORDENADOS DE UNA MANERA UTILIZAMOS EL Order by
+    #Se utiliza el order by despues de una consulta where
+    users=User.select().where(
+        User.active==True
+    ).order_by(User.username.desc()).limit(2)#Aqui estamos utilizando el metodo oderby en forma  descendente .decs()
+    #Si queremos una cantidad limitada de registros en orden descendente utilizamos el metodo .limit()
     #Imprimimos los registros
+
+    print(users)
     for user in users:
         print(user)
