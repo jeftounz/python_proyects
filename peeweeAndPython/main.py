@@ -85,12 +85,15 @@ if __name__=='__main__':
         )'''
     #SI QUEREMOS TENER LOS REGISTROS ORDENADOS DE UNA MANERA UTILIZAMOS EL Order by
     #Se utiliza el order by despues de una consulta where
-    users=User.select().where(
+    """users=User.select().where(
         User.active==True
-    ).order_by(User.username.desc()).limit(2)#Aqui estamos utilizando el metodo oderby en forma  descendente .decs()
+    ).order_by(User.username.desc()).limit(2)"""#Aqui estamos utilizando el metodo oderby en forma  descendente .decs()
     #Si queremos una cantidad limitada de registros en orden descendente utilizamos el metodo .limit()
     #Imprimimos los registros
 
-    print(users)
+    """print(users)
     for user in users:
-        print(user)
+        print(user)"""
+    
+    user=User.select().where(User.username=='user1')
+    
