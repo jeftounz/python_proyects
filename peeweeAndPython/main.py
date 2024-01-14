@@ -95,5 +95,19 @@ if __name__=='__main__':
     for user in users:
         print(user)"""
     
-    user=User.select().where(User.username=='user1')
-    #Esto es un comentario para avisar que no hubo avances el dia de hoy , gracias!
+    #EL METODO GET sirve para buscar un usuario descrito
+    #El metodo first es para encontra el primer usuario
+
+    #try:
+    #    user=User.select().where(User.username=='user1').get()
+    #    print(user) #Esto es un objeto tipo model select
+    #    print(type(user))
+    #except User.DoesNotExist as err:
+    #    print("No fue posible, obtener al usuario!")
+                
+    user=User.select().where(User.username=='user3').first()
+
+    if user:
+        print(user)
+    else:
+        print("No fue posible obtener al usuario!")    
