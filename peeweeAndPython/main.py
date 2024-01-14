@@ -96,4 +96,4 @@ if __name__=='__main__':
         print(user)"""
     
     user=User.select().where(User.username=='user1')
-    
+    #Esto es un comentario para avisar que no hubo avances el dia de hoy , gracias!
