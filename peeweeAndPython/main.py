@@ -105,9 +105,18 @@ if __name__=='__main__':
     #except User.DoesNotExist as err:
     #    print("No fue posible, obtener al usuario!")
                 
-    user=User.select().where(User.username=='user3').first()
+    # user=User.select().where(User.username=='user3').first()
 
-    if user:
+    '''if user:
         print(user)
     else:
-        print("No fue posible obtener al usuario!")    
+        print("No fue posible obtener al usuario!")    '''
+    exists=User.select().where(User.username=='user7').exists()
+    if exists:
+        print("El usuario existe en la tabla.")
+    else:
+        print("No fue posible obtener al usuario.")    
+
+     #Con el metodo .exist() nos dara un true oh un false si existe el registro durante una consulta
+     #El metodo count nos dira cuantas replicas hay del registro a partir de una consulta   
+
