@@ -111,12 +111,30 @@ if __name__=='__main__':
         print(user)
     else:
         print("No fue posible obtener al usuario!")    '''
-    exists=User.select().where(User.username=='user7').exists()
+    
+    #PÀRA VALIDAR AL EXISTENCIA DE UN REGISTRO POR MEDIO DE UNA CONSULTA
+    '''exists=User.select().where(User.username=='user7').exists()
     if exists:
         print("El usuario existe en la tabla.")
     else:
-        print("No fue posible obtener al usuario.")    
+        print("No fue posible obtener al usuario.")'''    
 
      #Con el metodo .exist() nos dara un true oh un false si existe el registro durante una consulta
      #El metodo count nos dira cuantas replicas hay del registro a partir de una consulta   
+
+    #PARA PODER ACTUALIZAR LOS REGISTROS EXISTENTES DE UNA BASE DE DATOS UTILIZAMOS :
+
+    #METODO 1
+    #Primero obtenemos el registro consultandolo
+    user=User.select().where(User.id==1).get()
+    
+    user.username="Nuevo username"
+    user.email="nuevo_email@gmail.com"
+    user.save()
+
+    #METODO 2 utilizando un query
+    query=User.update(username="User2 nuevo",
+                email="user2_nuevo@gmail.com").where(User.id==2)
+    print(query)
+    query.execute()
 
