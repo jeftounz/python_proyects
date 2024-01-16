@@ -23,7 +23,7 @@ class User(peewee.Model):
 
 
 if __name__=='__main__':
-        
+    print("FUNCION MAIN")    
     if User.table_exists(): #Creamos nuesta tabla como una clase
         User.drop_table()
     
