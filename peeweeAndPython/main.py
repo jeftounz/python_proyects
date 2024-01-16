@@ -126,15 +126,25 @@ if __name__=='__main__':
 
     #METODO 1
     #Primero obtenemos el registro consultandolo
-    user=User.select().where(User.id==1).get()
+    #user=User.select().where(User.id==1).get()
     
-    user.username="Nuevo username"
-    user.email="nuevo_email@gmail.com"
-    user.save()
+    #user.username="Nuevo username"
+    #user.email="nuevo_email@gmail.com"
+    #user.save()
 
     #METODO 2 utilizando un query
-    query=User.update(username="User2 nuevo",
-                email="user2_nuevo@gmail.com").where(User.id==2)
-    print(query)
-    query.execute()
+    #query=User.update(username="User2 nuevo",
+    #            email="user2_nuevo@gmail.com").where(User.id==2)
+    #print(query)
+    #query.execute()
+
+    #PARA PODER ELIMINAR REGISTROS DE NUESTRA BASE DE DATOS--------
+
+    #METODO 1
+    user=User.select().where(User.username=='user7').get()
+    user.delete_instance() #Metodo de instancia
+
+    #METODO 2
+    query=User.delete().where(User.id==6)
+    query.execute() #Metodo de clase
 
