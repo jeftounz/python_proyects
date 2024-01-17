@@ -1,5 +1,5 @@
 import peewee
-#AQUI DEMOSTRAMOS LA RELACION DE UNO A UNO
+#AQUI DEMOSTRAMOS LA RELACION DE UNO A UNO EN SQL
 database=peewee.MySQLDatabase('pythondb',
                      host='localhost',
                      port=3306,
