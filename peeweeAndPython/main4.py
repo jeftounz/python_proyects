@@ -59,9 +59,19 @@ ProductCategory.create(product=tv, category=technology)
 ProductCategory.create(product=tv, category=home)
 
 # Acceder a productos a través de una categoría
-for product_category in ProductCategory.select().where(ProductCategory.category == technology):
-    print(product_category.product)
+#for product_category in ProductCategory.select().where(ProductCategory.category == technology):
+#    print(product_category.product)
 
 # Acceder a categorías a través de un producto
-for product_category in ProductCategory.select().where(ProductCategory.product == tv):
-    print(product_category.category)
+#for product_category in ProductCategory.select().where(ProductCategory.product == tv):
+#    print(product_category.category)
+
+#Mostrar en consola todos los prodcutos con sus correspodientes categorias!
+
+#Este algoritmo produce el problema N+1 query 
+for product in Product.select(): #Aqui hacemos una consulta
+    
+    for product_categories in product.categories: #Realizamos otra consulta 
+        print(product,'-',product_categories.category) #Realizamos otra consulta
+
+        
