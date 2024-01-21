@@ -88,16 +88,16 @@ ProductCategory.create(product=tv, category=home)
 #Si queremos listar en consola todos los elementos que no posean categoria
 #Utilizamos leftjoin
 
-products = Product.select(
+products=Product.select(
     Product.title
 ).join(
     ProductCategory,
     peewee.JOIN.LEFT_OUTER
 ).where(
-    ProductCategory.product.is_null()  # Corregir la condición a ProductCategory.product.is_null()
+    ProductCategory.id==None
 )
 
 print(products)
-
+        
 for product in products:
     print(product.title)
