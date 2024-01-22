@@ -22,4 +22,11 @@ if __name__=='__main__':
     metadata.drop_all(engine)
     metadata.create_all(engine)
 
-    print(users.c.username)
+    with engine.connect() as connection:
+
+        query_insert=users.insert().values(
+            username='user1',
+            email='user1@example.com'
+        )
+    
+        connection.execute(query_insert)
