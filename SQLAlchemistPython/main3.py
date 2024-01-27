@@ -3,7 +3,7 @@ from datetime import datetime #Importamos el tiempo
 from sqlalchemy import create_engine #Nos permitira un objeto tipo engine para la conexion
 from sqlalchemy import MetaData #Servira de puente entre el programa y el gestor de postgress
 from sqlalchemy import Table,Column,Integer,String,DateTime #Seremos capaces de crear objetos de tipo table,columnas enteras y string
-
+from sqlalchemy import select
 
 engine=create_engine("postgresql://postgres:admin@localhost/project_pythondb")
 metadata=MetaData()
@@ -29,9 +29,18 @@ metadata.create_all(engine)
 with engine.connect() as connection:
     with open('usuarios.json') as file:
         connection.execute(users.insert(),json.load(file))
-    select_query=users.select()
+
+    #SELECT * FROM users    
+    #select_query=users.select()
+
+    #Podemos consultar con un select()
+    select_query=select([
+        users.c.id,
+        users.c.email,
+        users.c.name
+    ])    
 
     result=connection.execute(select_query) #ResultProxy
 
     for user in result.fetchall():
-        print(user) #RowProxy
+        print(user.id) #RowProxy
