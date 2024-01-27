@@ -14,10 +14,10 @@ users=Table(
     'users',
     metadata,
     Column('id',Integer(),primary_key=True),
-    Column('age',Integer),
+    Column('age',Integer()),
     Column('country',String(56),nullable=False),
     Column('email',String(50),nullable=False),
-    Column('gender',String(6),nullable=False),
+    Column('gender',String(10),nullable=False),
     Column('name',String(50),nullable=False)
 )
 
@@ -26,12 +26,15 @@ users=Table(
 
 metadata.drop_all(engine)
 metadata.create_all(engine)
+''''''
 try:
     with engine.connect() as connection:
         insert_query=users.insert() #Query -> Insert Into Users
 
         with open("usuarios.json") as file:
+            
             users=json.load(file)
+            print(users)
             connection.execute(insert_query,users)
            # for user in users:
            #    query= insert_query.values(**user)

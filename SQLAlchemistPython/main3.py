@@ -25,16 +25,13 @@ users=Table(
 
 metadata.drop_all(engine)
 metadata.create_all(engine)
-try:
-    with engine.connect() as connection:
-        insert_query=users.insert() #Query -> Insert Into Users
 
-        with open("usuarios.json") as file:
-            users=json.load(file)
-            connection.execute(insert_query,users)
-           # for user in users:
-           #    query= insert_query.values(**user)
-           #     connection.execute(query)
+with engine.connect() as connection:
+    with open('usuarios.json') as file:
+        connection.execute(users.insert(),json.load(file))
+    select_query=users.select()
 
-except Exception as error:
-    print(f"Error: {error}")
+    result=connection.execute(select_query) #ResultProxy
+
+    for user in result.fetchall():
+        print(user) #RowProxy
